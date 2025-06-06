@@ -1,195 +1,516 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]> <html class="ie lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>    <html class="ie lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>    <html class="ie lt-ie9"> <![endif]-->
-<!--[if gt IE 8]> <html> <![endif]-->
-<!--[if !IE]><!--><html lang="en"><!-- <![endif]-->
-<head>
-	<title>Happy Birthday</title>
-	<meta charset="UTF-8" />
-	<meta name="description" content="Happy Birthday Xola">
-	<meta name="robots" content="index, follow" />
-	<link rel="author" href="https://plus.google.com/u/1/+AyushSharma1/" /> 
-    <meta name="keywords" content="Birthday, Happy">
-    <!-- Strat of Facebook Meta -->
-    <meta property="og:type" content="E-Greeting" />
-    <meta property="og:image" content="favicon.ico" />
-    <meta property="og:description" content="Wish you a very Happy Birthday">
-    <!-- End of Facebook Meta Tags -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="stylesheet.css">
-	<link rel="stylesheet" type="text/css" href="loading.css">
-	<link href='http://fonts.googleapis.com/css?family=Signika' rel='stylesheet' type='text/css'>
-	<!-- <link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'> -->
-	<link rel="stylesheet/less" href="cake.less">
-	<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.1.0/less.min.js"></script>
-</head>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Happy Birthday Chotu Moto!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&family=Montserrat:wght@300;700&family=Source+Code+Pro&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Reset styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Quicksand", sans-serif;
+        background: linear-gradient(
+          135deg,
+          #ffecd2,
+          #ffb6c1
+        ); /* vibrant gradient */
+        overflow-x: hidden;
+        color: #333;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+      }
 
-<body>
-	<div class="loading"></div>
-    <div class="balloons text-center" id="b1">
-    	<h2 style="color:#F2B300;">H</h2>
-    </div>
-    <div class="balloons text-center" id="b2">
-    	<h2 style="color:#0719D4;">B</h2>
-    </div>
-	<div class="balloons text-center" id="b3">
-    	<h2 style="color:#D14D39;">D</h2>
-    </div>
-	<div class="balloons text-center" id="b4">
-    	<h2 style="color:#8FAD00;">X</h2>
-    </div>
-	<div class="balloons text-center" id="b5">
-    	<h2 style="color:#8377E4;">O</h2>
-    </div>
-    <div class="balloons text-center" id="b6">
-    	<h2 style="color:#99C96A;">L</h2>
-    </div>
-    <div class="balloons text-center" id="b7">
-    	<h2 style="color:#20CFB4;">A</h2>
+      /* Code background animation */
+      .code-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.1;
+        z-index: -1;
+        font-family: "Source Code Pro", monospace;
+        font-size: 0.9rem;
+        color: #444;
+        overflow: hidden;
+        white-space: pre;
+      }
+      .code-bg span {
+        position: absolute;
+        animation: codeFade 10s linear infinite;
+      }
+      @keyframes codeFade {
+        0% {
+          opacity: 0;
+          transform: translateY(100vh);
+        }
+        50% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-100vh);
+        }
+      }
+
+      /* Typed text section */
+      #typed {
+        white-space: pre-line;
+        margin: 50px 20px;
+        max-width: 700px;
+        font-size: 1.4rem;
+        line-height: 1.8;
+        text-align: center;
+        color: #222;
+        background: rgba(255, 255, 255, 0.85);
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: opacity 1s ease;
+      }
+
+      /* Main greeting */
+      h1 {
+        font-family: "Pacifico", cursive;
+        font-size: 3.8rem;
+        color: #ff3366;
+        margin: 30px 0;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 1s ease-out;
+      }
+      h1.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Balloons */
+      .balloons {
+        position: relative;
+        width: 100%;
+        height: 400px;
+        margin-top: 20px;
+        opacity: 0;
+        transition: opacity 1.5s ease-in;
+      }
+      .balloons.visible {
+        opacity: 1;
+      }
+      .balloon {
+        position: absolute;
+        bottom: -150px;
+        font-size: 3.5rem;
+        animation: float 6s ease-in-out infinite;
+        transition: transform 0.3s ease;
+      }
+      .balloon:hover {
+        transform: scale(1.3) rotate(10deg);
+      }
+      @keyframes float {
+        0% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-400px) rotate(20deg);
+        }
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+      }
+
+      /* Cake */
+      .cake {
+        position: relative;
+        width: 260px;
+        height: 160px;
+        margin: 30px auto;
+        background: linear-gradient(45deg, #ff6f91, #ffcb8e);
+        border-radius: 15px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        transition: all 1s ease;
+        cursor: pointer;
+        overflow: hidden;
+      }
+      .cake.visible {
+        opacity: 1;
+      }
+      .cake:hover {
+        transform: scale(1.1);
+      }
+      .cake:before {
+        content: "";
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 20px;
+        height: 50px;
+        background: #fff;
+        border-radius: 6px;
+      }
+      .flame {
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 28px;
+        height: 28px;
+        background: linear-gradient(orange, red);
+        border-radius: 50%;
+        animation: flicker 0.3s infinite;
+      }
+      @keyframes flicker {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.7;
+          transform: scale(0.9);
+        }
+      }
+      .sparkle {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: #fff;
+        border-radius: 50%;
+        opacity: 0;
+        animation: sparkle 1.5s infinite;
+      }
+      @keyframes sparkle {
+        0% {
+          opacity: 0;
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(0);
+        }
+      }
+
+      /* Dancing character */
+      .dancer {
+        font-size: 3rem;
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        animation: dance 1s infinite;
+        opacity: 0;
+        transition: opacity 1s ease;
+      }
+      .dancer.visible {
+        opacity: 1;
+      }
+      @keyframes dance {
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+        25% {
+          transform: rotate(15deg);
+        }
+        75% {
+          transform: rotate(-15deg);
+        }
+      }
+
+      /* Personal message */
+      .message {
+        margin: 40px 20px;
+        max-width: 700px;
+        font-family: "Montserrat", sans-serif;
+        font-size: 1.2rem;
+        line-height: 1.7;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        transition: opacity 1.5s ease-in;
+      }
+      .message.visible {
+        opacity: 1;
+      }
+
+      /* Buttons */
+      .btn {
+        margin: 15px;
+        padding: 12px 30px;
+        font-family: "Quicksand", sans-serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #fff;
+        background: #ff3366;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s ease;
+      }
+      .btn:hover {
+        background: #e6004c;
+        transform: scale(1.05);
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.8rem;
+        }
+        #typed {
+          font-size: 1.2rem;
+          margin: 30px 15px;
+        }
+        .cake {
+          width: 200px;
+          height: 120px;
+        }
+        .balloons {
+          height: 300px;
+        }
+        .balloon {
+          font-size: 2.8rem;
+        }
+        .message {
+          font-size: 1rem;
+          margin: 20px 15px;
+        }
+        .dancer {
+          font-size: 2.5rem;
+          bottom: 10px;
+          right: 10px;
+        }
+      }
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 2.2rem;
+        }
+        #typed {
+          font-size: 1rem;
+        }
+        .cake {
+          width: 180px;
+          height: 100px;
+        }
+        .balloons {
+          height: 200px;
+        }
+        .balloon {
+          font-size: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Code background -->
+    <div class="code-bg" id="codeBg"></div>
+
+    <!-- Typed intro -->
+    <div id="typed"></div>
+
+    <!-- Main greeting -->
+    <h1 id="greet">🎉 Happy Birthday, Noor Ul Ain! 🎉</h1>
+
+    <!-- Balloons -->
+    <div class="balloons" id="balloons">
+      <div class="balloon" style="left: 10%; animation-delay: 0s">🎈</div>
+      <div class="balloon" style="left: 30%; animation-delay: 1s">🎈</div>
+      <div class="balloon" style="left: 50%; animation-delay: 2s">🎈</div>
+      <div class="balloon" style="left: 70%; animation-delay: 1.5s">🎈</div>
+      <div class="balloon" style="left: 90%; animation-delay: 0.5s">🎈</div>
     </div>
 
-    <img src="Screenshot_20240426-204650.png" width="100%" class="balloon-border">
- 
+    <!-- Cake -->
+    <div class="cake" id="cake">
+      <div class="flame"></div>
+      <div
+        class="sparkle"
+        style="top: 10px; left: 20px; animation-delay: 0s"
+      ></div>
+      <div
+        class="sparkle"
+        style="top: 30px; left: 80%; animation-delay: 0.5s"
+      ></div>
+      <div
+        class="sparkle"
+        style="top: 70%; left: 30px; animation-delay: 1s"
+      ></div>
+    </div>
 
-	<div class="container">
-		
-		<div class="row">
-			<div class="col-md-2 col-xs-2 bulb-holder">
-				<div class="bulb" id="bulb_yellow"></div>
-			</div>
-			<div class="col-md-2 col-xs-2 bulb-holder">
-				<div class="bulb" id="bulb_red"></div>
-			</div>
-			<div class="col-md-2 col-xs-2 bulb-holder">
-				<div class="bulb" id="bulb_blue"></div>
-			</div>
-			<div class="col-md-2 col-xs-2 bulb-holder">
-				<div class="bulb" id="bulb_green"></div>
-			</div>
-			<div class="col-md-2 col-xs-2 bulb-holder">
-				<div class="bulb" id="bulb_pink"></div>
-			</div>
-			<div class="col-md-2 col-xs-2 bulb-holder">
-				<div class="bulb" id="bulb_orange"></div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12 text-center">
-				<img  src="Screenshot_20240426-204650.png" class="bannar">
-			</div>
-		</div>
-		<div class="row cake-cover">
-			<div class="col-md-12 texr-center">
-				<div class="cake">
-				  <div class="velas">
-				    <div class="fuego"></div>
-				    <div class="fuego"></div>
-				    <div class="fuego"></div>
-				    <div class="fuego"></div>
-				    <div class="fuego"></div>
-				  </div>
-				  <div class="cobertura"></div>
-				  <div class="bizcocho"></div>
-				</div>
-			</div>
-		</div>
-		<div class="row message">
-			<div class="col-md-12">
-				<p>Today is...</p>
-				<p>as beautiful as other days</p>
-				<p>but you realize</p>
-				<p>another year has gone</p>
-				<p>in a blink of the eyes</p>
-				<p><strong>however</strong></p>
-				<p>Do you know..?</p>
-				<p>today is just special</p>
-				<p>so special to you</p>
-				<p>that's why</p>
-				<p>Let's make it...</p>
-				<p>the best celebration ever</p>
-				<p>and let me share...</p>
-				<p>a piece of happiness to you</p>
-				<p>I made all this...</p>
-				<p>as a birthday present to you</p>
-				<p>thanks for being there</p>
-				<p>thanks for the friendship we made</p>
-				<p>thanks for everything</p>
-				<p>I wish you all the best</p>
-				<p>May your life be at ease</p>
-				<p>May all your wishes come true</p>
-				<p>Remember</p>
-				<p>your ambitions</p>
-				<p>you live as a free bird...</p>
-				<p>flying in the blue sky</p>
-				<p>Now things are different...</p>
-				<p>real story of your life</p>
-				<p>is just about to begin</p>
-				<p>indeed..</p>
-				<p>but...</p>
-				<p>don't worry</p>
-				<p>because...</p>
-				<p>God has your back</p>
-				<p>and</p>
-				<p>this year will be better</p>
-				<p>and I hope</p>
-				<p>you'll find...</p>
-				<p>happiness along the way</p>
-				<p>keep your spirit up</p>
-				<p>enjoy every single moment...</p>
-				<p>that you experience today</p>
-				<p>fill it with your most beautiful smile</p>
-				<p>and make it the best memory..</p>
-				<p>lastly...</p>
-				<p>I'd like to wish you one more time</p>
-				<p>a very happy birthday Hamza blti 
-        </p>
-			</div>
-		</div>
-		<div class="navbar navbar-fixed-bottom">
-			<div class="row">
-				<div class="col-md-6 text-center col-md-offset-3">
-					<button class="btn btn-primary" id="turn_on">Turn On Lights</button>
-					<button class="btn btn-primary" id="play">Play Music</button>
-					<button class="btn btn-primary" id="bannar_coming">Let's Decorate</button>
-					<button class="btn btn-primary" id="balloons_flying">Fly With Balloons</button>
-					<button class="btn btn-primary" id="cake_fadein">Most Delicious Cake Ever</button>
-					<button class="btn btn-primary" id="light_candle"> Light Candle</button>
-					<button class="btn btn-primary" id="wish_message">Happy Birthday</button>
-					<button class="btn btn-primary" id="story">A mesage for you</button>
-					<!-- <button class="btn btn-primary" id="cake_cut">Lrt's Cut the Cake</button> -->
-				</div>
-			</div>
-			<!-- <div class="col-md-2">
-			</div>
-			<div class="col-md-2">
-			</div>
-			<div class="col-md-2">
-			</div>
-			<div class="col-md-2">
-			</div>
-			<div class="col-md-2">
-			</div> -->
-		</div>
+    <!-- Dancing character -->
+    <div class="dancer" id="dancer">🕺</div>
 
+    <!-- Personal message -->
+    <div class="message" id="personalMessage">
+      Yo Chotu Moto! 😎 <br />
+      Narazgi chhodo, party shuru karo! 🎈 <br />
+      May your day be full of masti, laughter, and bug-free code! <br />
+      Keep rocking, my awesome dost! 🚀 <br />
+      — Your buddy, Sibghatullah
+    </div>
 
-	</div>
-</body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script src="effect.js"></script>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <!-- Buttons -->
+    <button class="btn" onclick="fireConfetti()">Surprise Confetti! 🎉</button>
+    <button class="btn" onclick="replay()">Replay Fun! 🔄</button>
 
-  ga('create', 'UA-58229732-1', 'auto');
-  ga('send', 'pageview');
+    <!-- Background music (royalty-free) -->
+    <audio
+      id="bgm"
+      src="https://cdn.pixabay.com/download/audio/2022/03/24/audio_d60b6feb60.mp3?filename=happy-birthday-115132.mp3"
+      preload="auto"
+    ></audio>
 
-</script>
+    <!-- External libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+      // AI-generated code snippet for background
+      const codeSnippets = [
+        `// AI wishes you a Happy Birthday, Noor Ul Ain!
+function celebrate() {
+  console.log("Party time! 🎉");
+  return "Zero bugs, all fun!";
+}`,
+        `// Chotu Moto's Bday Bash
+def happy_birthday():
+    print("Masti mode: ON 😎")
+    return "Keep shining!"`,
+        `/* AI-coded birthday vibes */
+.birthday {
+  joy: 100%;
+  fun: "Masti Must!";
+  bugs: 0;
+}`,
+      ];
+
+      // Generate code background
+      function generateCodeBg() {
+        const codeBg = document.getElementById("codeBg");
+        for (let i = 0; i < 10; i++) {
+          const span = document.createElement("span");
+          span.textContent =
+            codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+          span.style.left = `${Math.random() * 100}%`;
+          span.style.animationDelay = `${Math.random() * 10}s`;
+          codeBg.appendChild(span);
+        }
+      }
+
+      // Lines for the typed intro
+      const lines = [
+        "Yo Noor Ul Ain, abhi bhi naraz? 😜",
+        "Chalo, let's make it epic...",
+        "No boring birthday wishes here!",
+        " this small  masti for you 💻",
+        "Because you're the coolest dost!",
+        "Tayyar ho? Let's party! 🎈",
+        "Hope this bring a small smile shd jlde bhg du sbr ni ona mra sa! 😄",
+      ];
+
+      let typedInstance;
+
+      // Start typing effect
+      function startTyping() {
+        typedInstance = new Typed("#typed", {
+          strings: lines,
+          typeSpeed: 60,
+          backSpeed: 20,
+          smartBackspace: false,
+          showCursor: false,
+          onComplete: () => startShow(),
+        });
+      }
+
+      // Reveal the rest of the page
+      function startShow() {
+        document.getElementById("greet").classList.add("visible");
+        document.getElementById("balloons").classList.add("visible");
+        document.getElementById("cake").classList.add("visible");
+        document.getElementById("dancer").classList.add("visible");
+        document.getElementById("personalMessage").classList.add("visible");
+        fireConfetti();
+        playMusic();
+      }
+
+      // Replay animation
+      function replay() {
+        // Reset visibility
+        document.getElementById("greet").classList.remove("visible");
+        document.getElementById("balloons").classList.remove("visible");
+        document.getElementById("cake").classList.remove("visible");
+        document.getElementById("dancer").classList.remove("visible");
+        document.getElementById("personalMessage").classList.remove("visible");
+        document.getElementById("typed").style.opacity = 0;
+
+        // Stop and destroy current typing
+        if (typedInstance) {
+          typedInstance.destroy();
+        }
+
+        // Restart
+        setTimeout(() => {
+          document.getElementById("typed").textContent = "";
+          document.getElementById("typed").style.opacity = 1;
+          startTyping();
+        }, 500);
+      }
+
+      // Confetti celebration
+      function fireConfetti() {
+        const duration = 4 * 1000;
+        const end = Date.now() + duration;
+        const colors = ["#ff3366", "#ffcb8e", "#ffecd2", "#ffb6c1"];
+        (function frame() {
+          confetti({
+            particleCount: 10,
+            spread: 80,
+            origin: { x: Math.random(), y: Math.random() * 0.5 },
+            colors: colors,
+          });
+          if (Date.now() < end) {
+            requestAnimationFrame(frame);
+          }
+        })();
+      }
+
+      // Background music
+      function playMusic() {
+        const audio = document.getElementById("bgm");
+        audio.volume = 0.3;
+        audio.play().catch(() => {
+          /* Autoplay might be blocked */
+        });
+      }
+
+      // Cake click effect
+      document.getElementById("cake").addEventListener("click", () => {
+        fireConfetti();
+      });
+
+      // Initialize
+      generateCodeBg();
+      startTyping();
+    </script>
+  </body>
 </html>
