@@ -18,11 +18,7 @@
       }
       body {
         font-family: "Quicksand", sans-serif;
-        background: linear-gradient(
-          135deg,
-          #ffecd2,
-          #ffb6c1
-        ); /* vibrant gradient */
+        background: linear-gradient(135deg, #ffecd2, #ffb6c1);
         overflow-x: hidden;
         color: #333;
         min-height: 100vh;
@@ -253,6 +249,72 @@
         opacity: 1;
       }
 
+      /* Hidden message button */
+      .secret-btn {
+        position: absolute;
+        bottom: 20px;
+        right: 80px;
+        font-family: "Source Code Pro", monospace;
+        font-size: 1.2rem;
+        color: #ff3366;
+        background: none;
+        border: none;
+        cursor: pointer;
+        animation: blink 1s infinite;
+        opacity: 0;
+        transition: opacity 1s ease;
+      }
+      .secret-btn.visible {
+        opacity: 1;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+
+      /* Hidden message modal */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+      .modal-content {
+        background: #1e1e1e;
+        color: #fff;
+        font-family: "Source Code Pro", monospace;
+        font-size: 1.1rem;
+        padding: 20px;
+        border-radius: 8px;
+        max-width: 500px;
+        width: 90%;
+        text-align: left;
+        position: relative;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+      .modal-content pre {
+        white-space: pre-wrap;
+      }
+      .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 1.5rem;
+        color: #ff3366;
+        cursor: pointer;
+      }
+
       /* Buttons */
       .btn {
         margin: 15px;
@@ -300,6 +362,13 @@
           bottom: 10px;
           right: 10px;
         }
+        .secret-btn {
+          right: 70px;
+          font-size: 1rem;
+        }
+        .modal-content {
+          font-size: 1rem;
+        }
       }
       @media (max-width: 480px) {
         h1 {
@@ -317,6 +386,9 @@
         }
         .balloon {
           font-size: 2rem;
+        }
+        .modal-content {
+          font-size: 0.9rem;
         }
       }
     </style>
@@ -342,23 +414,40 @@
 
     <!-- Cake -->
     <div class="cake" id="cake">
-      <div class="flame"></div>
-      <div
-        class="sparkle"
-        style="top: 10px; left: 20px; animation-delay: 0s"
-      ></div>
-      <div
-        class="sparkle"
-        style="top: 30px; left: 80%; animation-delay: 0.5s"
-      ></div>
-      <div
-        class="sparkle"
-        style="top: 70%; left: 30px; animation-delay: 1s"
-      ></div>
+      <div class="flame" id="flame"></div>
+      <div class="sparkle" style="top: 10px; left: 20px; animation-delay: 0s"></div>
+      <div class="sparkle" style="top: 30px; left: 80%; animation-delay: 0.5s"></div>
+      <div class="sparkle" style="top: 70%; left: 30px; animation-delay: 1s"></div>
     </div>
 
     <!-- Dancing character -->
     <div class="dancer" id="dancer">🕺</div>
+
+    <!-- Hidden message button -->
+    <button class="secret-btn" id="secretBtn">|</button>
+
+    <!-- Hidden message modal -->
+    <div class="modal" id="secretModal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">×</span>
+        <pre>
+// Hidden Message for Noor Ul Ain! 🤫
+function myTrueFeelings() {
+  return `
+    I get jealous easily.
+    I overthink everything you say.
+    I act like I don't care, but I do.
+    I get angry, but only because you matter.
+    I don't feel this way about anyone else.
+    It's just you.
+    You're the only one who makes me feel this much.
+    And even if I don't say it all the time...
+    You mean a lot to me.
+  `;
+}
+        </pre>
+      </div>
+    </div>
 
     <!-- Personal message -->
     <div class="message" id="personalMessage">
@@ -409,8 +498,7 @@ def happy_birthday():
         const codeBg = document.getElementById("codeBg");
         for (let i = 0; i < 10; i++) {
           const span = document.createElement("span");
-          span.textContent =
-            codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+          span.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
           span.style.left = `${Math.random() * 100}%`;
           span.style.animationDelay = `${Math.random() * 10}s`;
           codeBg.appendChild(span);
@@ -449,6 +537,7 @@ def happy_birthday():
         document.getElementById("balloons").classList.add("visible");
         document.getElementById("cake").classList.add("visible");
         document.getElementById("dancer").classList.add("visible");
+        document.getElementById("secretBtn").classList.add("visible");
         document.getElementById("personalMessage").classList.add("visible");
         fireConfetti();
         playMusic();
@@ -456,20 +545,19 @@ def happy_birthday():
 
       // Replay animation
       function replay() {
-        // Reset visibility
         document.getElementById("greet").classList.remove("visible");
         document.getElementById("balloons").classList.remove("visible");
         document.getElementById("cake").classList.remove("visible");
         document.getElementById("dancer").classList.remove("visible");
+        document.getElementById("secretBtn").classList.remove("visible");
         document.getElementById("personalMessage").classList.remove("visible");
         document.getElementById("typed").style.opacity = 0;
+        closeModal();
 
-        // Stop and destroy current typing
         if (typedInstance) {
           typedInstance.destroy();
         }
 
-        // Restart
         setTimeout(() => {
           document.getElementById("typed").textContent = "";
           document.getElementById("typed").style.opacity = 1;
@@ -506,8 +594,21 @@ def happy_birthday():
 
       // Cake click effect
       document.getElementById("cake").addEventListener("click", () => {
-        fireConfetti();
+        const flame = document.getElementById("flame");
+        if (!flame.classList.contains("off")) {
+          flame.classList.add("off");
+          fireConfetti();
+        }
       });
+
+      // Hidden message modal
+      function openModal() {
+        document.getElementById("secretModal").style.display = "flex";
+      }
+      function closeModal() {
+        document.getElementById("secretModal").style.display = "none";
+      }
+      document.getElementById("secretBtn").addEventListener("click", openModal);
 
       // Initialize
       generateCodeBg();
